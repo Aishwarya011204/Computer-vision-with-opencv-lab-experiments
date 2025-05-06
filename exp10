@@ -1,0 +1,11 @@
+from PIL import Image
+image = Image.open("C:\\Users\\SAIL\\Downloads\\img4.jfif")
+image.show()
+canvas_width = image.width + 100
+canvas_height = image.height + 100
+canvas = Image.new("RGB", (canvas_width, canvas_height), (255, 255, 255))
+new_x = 50  
+new_y = 30  
+canvas.paste(image, (new_x, new_y))
+canvas.save("moved_image.jpg")
+canvas.show()
