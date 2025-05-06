@@ -1,0 +1,8 @@
+from PIL import Image 
+image = Image.open("C:\\Users\\SAIL\\Downloads\\IMG.jfif")  
+clockwise = image.rotate(-90, expand=True)
+clockwise.save("rotated_clockwise.jpg")
+counter_clockwise = image.rotate(90, expand=True)
+counter_clockwise.save("rotated_counterclockwise.jpg")
+clockwise.show()
+counter_clockwise.show()
