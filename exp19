@@ -1,0 +1,10 @@
+import cv2
+import numpy as np
+image = cv2.imread("C:\\Users\\SAIL\\Pictures\\images (1).jfif")
+gray=cv2.cvtColor(image,cv2.IMREAD_GRAYSCALE)
+cv2.imshow("original image",image)
+sobel_x = cv2.Sobel(image, cv2.CV_64F, dx=1, dy=0, ksize=3)
+sobel_y = cv2.Sobel(image, cv2.CV_64F, dx=0, dy=1, ksize=3)
+mag = cv2.magnitude(sobel_x,sobel_y)
+edges_xy=cv2.convertScaleAbs(mag)
+cv2.imshow('Sobel XY Edge Detection', edges_xy)
