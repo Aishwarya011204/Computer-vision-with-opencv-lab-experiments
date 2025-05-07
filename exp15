@@ -1,0 +1,24 @@
+import numpy as np
+import cv2
+def compute_homography_dlt(src_pts, dst_pts):
+    """Compute homography matrix using DLT algorithm."""
+    A = []
+    for (x, y), (x_prime, y_prime) in zip(src_pts, dst_pts):
+        A.append([-x, -y, -1, 0, 0, 0, x * x_prime, y * x_prime, x_prime])
+        A.append([0, 0, 0, -x, -y, -1, x * y_prime, y * y_prime, y_prime])
+    
+    A = np.array(A)
+    U, S, Vt = np.linalg.svd(A)
+    h = Vt[-1, :]
+    H = h.reshape((3, 3))
+    return H / H[2, 2]
+image = cv2.imread("C:\\Users\\SAIL\\Pictures\\images (1).jfif")
+rows, cols = image.shape[:2]
+src_points = np.float32([[50, 50], [400, 50], [50, 400], [400, 400]])
+dst_points = np.float32([[10, 10], [300, 10], [10, 300], [300, 300]])
+H = compute_homography_dlt(src_points, dst_points)
+warped = cv2.warpPerspective(image, H, (300, 300))
+cv2.imwrite("dlt_transformed.jpg", warped)
+cv2.imshow("DLT Homography", warped)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
