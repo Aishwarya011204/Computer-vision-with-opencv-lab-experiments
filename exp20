@@ -1,0 +1,32 @@
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+image_path = "C:\\Users\\SAIL\\Downloads\\img4.jfif"  
+img = Image.open(image_path).convert("L")
+img_np = np.array(img)
+
+laplacian_mask = np.array([[0, 1, 0],
+                           [1, -4, 1],
+                           [0, 1, 0]])
+laplacian_filtered = cv2.filter2D(img_np, -1, laplacian_mask)
+sharpened_img = cv2.subtract(img_np, laplacian_filtered)
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.title("Original Image")
+plt.imshow(img_np, cmap='gray')
+plt.axis('off')
+
+plt.subplot(1, 3, 2)
+plt.title("Laplacian Filtered")
+plt.imshow(laplacian_filtered, cmap='gray')
+plt.axis('off')
+
+plt.subplot(1, 3, 3)
+plt.title("Sharpened Image")
+plt.imshow(sharpened_img, cmap='gray')
+plt.axis('off')
+
+plt.tight_layout()
+plt.show()
